@@ -2,6 +2,7 @@ import { Switch, Route, Redirect } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
+import { AppProvider } from "@/lib/appContext";
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/Dashboard";
 import CowList from "@/pages/CowList";
@@ -27,8 +28,10 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <Router />
+      <AppProvider>
+        <Toaster />
+        <Router />
+      </AppProvider>
     </QueryClientProvider>
   );
 }

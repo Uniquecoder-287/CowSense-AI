@@ -1,0 +1,270 @@
+"Build a clean, modern, premium-quality mobile app UI/UX for CowSense AI, a hardware + software system used for cow health monitoring and early disease prediction. The UI must be extremely simple, farmer-friendly, futuristic, and visually appealing. The entire design should use soft glassmorphism / neumorphism with a pastel color palette (sky blue, mint green, white, lavender, soft purple). Include smooth animations, rounded components, and minimalist icons.
+
+The app contains 4 main sections/tabs: Home, Herd, Notifications, and Settings. Below are the exact instructions for each section:
+
+⭐ 1. HOME SCREEN
+
+This is the main dashboard. Use a clean, spacious layout.
+
+Include:
+
+Large Health Score Ring (0–100) for each cow
+
+Quick vitals in glass cards:
+
+Body Temperature
+
+Heart Rate
+
+Activity Level
+
+Rumination/Chewing Rate
+
+AI Predictions card showing:
+
+Mastitis risk
+
+Heat stress risk
+
+Digestive disorder risk
+
+"Live Location" shortcut button
+
+"Detailed Health Report" button
+
+Smooth animations for updates
+
+Color-coded statuses:
+
+Green: Normal
+
+Yellow: Warning
+
+Red: Critical
+
+Styling:
+
+Use glassmorphic cards with blur effect
+
+Large circular elements for health scores
+
+Light gradient backgrounds
+
+Minimalistic icons
+
+High readability for farmers
+
+⭐ 2. HERD SCREEN
+
+This page lists all cows individually with clean, card-based profiles.
+
+Include:
+
+Grid or list view of cows
+
+Each cow card contains:
+
+Cow Image
+
+Cow Name + ID
+
+Mini Health Score circle
+
+Status color indicator
+
+Click on any cow to open Full Cow Profile
+
+Full Cow Profile Page must include:
+
+Vitals history (temperature, heart rate, activity)
+
+Rumination trend graph
+
+Milk output chart (if enabled)
+
+Feed & water intake charts
+
+Stress score
+
+Behavior insights (walking, resting, chewing time)
+
+AI-detected early disease patterns
+
+GPS Map showing the cow's location
+
+Download/Share health report
+
+Styling:
+
+Soft, card-based layout
+
+Smooth curved edges
+
+Pastel color accents
+
+High-quality cow illustrations or icons
+
+⭐ 3. NOTIFICATIONS SCREEN
+
+This section shows all health alerts, warnings, and system messages.
+
+Include:
+
+Real-time alerts for:
+
+High temperature
+
+Low rumination
+
+Low activity
+
+High heart rate
+
+Geo-fence breach
+
+SOS condition
+
+Clear categories:
+
+Critical, Warning, General
+
+Each alert expands to show:
+
+Explanation
+
+Possible disease risk
+
+Recommended actions
+
+First aid steps
+
+Styling:
+
+Bright, color-coded alert cards
+
+Red = urgent, Yellow = moderate, Blue/Green = normal
+
+Smooth “slide in” animations for new alerts
+
+Clean timeline layout
+
+⭐ 4. SETTINGS SCREEN
+
+Provide full customization options. Use a simple, beautiful, minimal style.
+
+Include:
+App Appearance
+
+Toggle between:
+
+Pitch Dark Mode (pure black background)
+
+Light / White Mode
+
+System Default
+
+Small preview thumbnails of each theme
+
+Language Selection
+
+Options:
+
+मराठी (Marathi)
+
+हिन्दी (Hindi)
+
+English
+
+Big, easy-to-tap buttons
+
+Instant app translation
+
+Device & Sensor Settings
+
+Pair new IoT collar/tag
+
+Check sensor battery level
+
+Firmware update option
+
+Auto reconnect toggle
+
+Notification Preferences
+
+Enable/disable:
+
+Health alerts
+
+Geo-fence alerts
+
+Low activity alerts
+
+Critical SOS alerts
+
+Data & Cloud
+
+Sync to cloud
+
+Enable auto-backup
+
+Export PDF health report
+
+Storage optimization
+
+Support
+
+Contact Vet
+
+Help Center / FAQ
+
+Report a Problem
+
+About App
+
+Styling:
+
+Soft neumorphism
+
+Rounded cards
+
+Simple icons
+
+High contrast in dark mode
+
+Smooth toggles and sliders
+
+⭐ BOTTOM NAVIGATION BAR
+
+Include 4 tabs with rounded icons:
+
+Home
+
+Herd
+
+Notifications
+
+Settings
+
+Use soft glowing highlights for the selected tab.
+
+⭐ OVERALL APP DESIGN REQUIREMENTS
+
+Pastel gradients + glassmorphism
+
+High readability for farmers
+
+Minimalistic, intuitive UI
+
+Animated transitions
+
+Beautiful iconography
+
+Clean typography (rounded fonts)
+
+User experience should feel premium and futuristic
+
+Every screen must be accessible for non-technical rural users
+
+Keep navigation simple and logical
+
+Generate the complete UI flow for all screens with consistent styling, modern design language, and clean usability."

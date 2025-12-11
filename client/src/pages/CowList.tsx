@@ -1,6 +1,6 @@
 import { MobileLayout } from "@/components/layout/MobileLayout";
 import { mockCows } from "@/lib/mockData";
-import { Search, Filter, MapPin, Battery } from "lucide-react";
+import { Search, MapPin, Battery, ChevronRight, Filter } from "lucide-react";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -74,50 +74,65 @@ export default function CowList() {
         </div>
       </div>
 
-      <div className="space-y-3 mt-2">
+      <div className="grid grid-cols-1 gap-4 mt-2">
         {filteredCows.map((cow) => (
           <Link key={cow.id} href={`/cow/${cow.id}`}>
             <a className="block group">
-              <div className="bg-white/70 backdrop-blur-sm p-4 rounded-2xl border border-white flex items-center gap-4 shadow-sm transition-all hover:shadow-md hover:scale-[1.01]">
+              <div className="glass p-4 rounded-3xl flex items-center gap-4 transition-all hover:scale-[1.01] active:scale-[0.99]">
                 <div className="relative">
+                   {/* Avatar */}
                   <div className={cn(
-                    "w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold bg-gradient-to-br text-white shadow-inner",
+                    "w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold bg-gradient-to-br text-white shadow-inner",
                     cow.status === 'healthy' ? "from-green-400 to-emerald-600" :
                     cow.status === 'warning' ? "from-orange-400 to-amber-600" :
                     "from-red-400 to-rose-600"
                   )}>
                     {cow.name[0]}
                   </div>
-                  {cow.status !== 'healthy' && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-sm">
-                      <span className={cn("w-2.5 h-2.5 rounded-full", cow.status === 'critical' ? "bg-red-500 animate-pulse" : "bg-orange-500")} />
-                    </span>
-                  )}
+                  
+                  {/* Status Indicator */}
+                  <span className={cn(
+                    "absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white flex items-center justify-center",
+                    cow.status === 'healthy' ? "bg-green-500" :
+                    cow.status === 'warning' ? "bg-orange-500" :
+                    "bg-red-500"
+                  )}>
+                  </span>
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start">
-                    <h3 className="font-bold text-foreground text-base truncate">{cow.name}</h3>
-                    <span className={cn(
-                      "text-[10px] px-2 py-0.5 rounded-full font-medium uppercase",
-                      cow.status === 'healthy' ? "bg-green-100 text-green-700" :
-                      cow.status === 'warning' ? "bg-orange-100 text-orange-700" :
-                      "bg-red-100 text-red-700"
-                    )}>
-                      {cow.status}
-                    </span>
+                    <div>
+                        <h3 className="font-bold text-foreground text-lg truncate">{cow.name}</h3>
+                        <p className="text-xs text-muted-foreground">ID: {cow.id}</p>
+                    </div>
+                    <div className="flex flex-col items-end">
+                       {/* Mini Health Score Ring */}
+                       <div className="relative w-10 h-10 flex items-center justify-center">
+                          <svg className="w-full h-full transform -rotate-90">
+                             <circle cx="20" cy="20" r="16" stroke="#e2e8f0" strokeWidth="4" fill="transparent" />
+                             <circle 
+                              cx="20" cy="20" r="16" 
+                              stroke={cow.healthScore > 80 ? "#22c55e" : cow.healthScore > 50 ? "#f97316" : "#ef4444"} 
+                              strokeWidth="4" fill="transparent" 
+                              strokeDasharray={2 * Math.PI * 16}
+                              strokeDashoffset={2 * Math.PI * 16 * (1 - cow.healthScore / 100)}
+                              strokeLinecap="round"
+                             />
+                          </svg>
+                          <span className="absolute text-[10px] font-bold">{cow.healthScore}</span>
+                       </div>
+                    </div>
                   </div>
-                  <p className="text-xs text-muted-foreground mb-2">ID: {cow.id} • {cow.breed}</p>
                   
-                  <div className="flex items-center gap-3">
-                    <span className="flex items-center gap-1 text-[11px] text-muted-foreground bg-secondary/20 px-2 py-1 rounded-md">
+                  <div className="flex items-center gap-3 mt-2">
+                    <span className="flex items-center gap-1 text-[11px] text-muted-foreground bg-white/50 px-2 py-1 rounded-md">
                       <MapPin className="w-3 h-3" /> {cow.location}
-                    </span>
-                    <span className="flex items-center gap-1 text-[11px] text-muted-foreground bg-gray-100 px-2 py-1 rounded-md">
-                      <Battery className="w-3 h-3" /> {cow.batteryLevel}%
                     </span>
                   </div>
                 </div>
+                
+                <ChevronRight className="w-5 h-5 text-muted-foreground/50" />
               </div>
             </a>
           </Link>

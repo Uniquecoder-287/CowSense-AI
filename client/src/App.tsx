@@ -6,6 +6,8 @@ import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/Dashboard";
 import CowList from "@/pages/CowList";
 import CowDetails from "@/pages/CowDetails";
+import Notifications from "@/pages/Notifications";
+import Settings from "@/pages/Settings";
 
 function Router() {
   return (
@@ -13,15 +15,10 @@ function Router() {
       <Route path="/" component={Dashboard} />
       <Route path="/herd" component={CowList} />
       <Route path="/cow/:id" component={CowDetails} />
+      <Route path="/notifications" component={Notifications} />
+      <Route path="/settings" component={Settings} />
       
-      {/* Redirect placeholder routes back to home for now */}
-      <Route path="/alerts">
-        <Redirect to="/" />
-      </Route>
-      <Route path="/settings">
-        <Redirect to="/" />
-      </Route>
-
+      {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
   );

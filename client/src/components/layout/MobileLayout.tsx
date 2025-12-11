@@ -13,7 +13,7 @@ export function MobileLayout({ children }: MobileLayoutProps) {
   const navItems = [
     { icon: LayoutDashboard, label: "Home", path: "/" },
     { icon: List, label: "Herd", path: "/herd" },
-    { icon: Bell, label: "Alerts", path: "/alerts" },
+    { icon: Bell, label: "Alerts", path: "/notifications" },
     { icon: Settings, label: "Settings", path: "/settings" },
   ];
 
@@ -60,7 +60,7 @@ export function MobileLayout({ children }: MobileLayoutProps) {
                   className={cn(
                     "p-2 rounded-2xl transition-all duration-300",
                     isActive 
-                      ? "bg-primary/10 text-primary translate-y-[-4px] shadow-sm" 
+                      ? "bg-primary/10 text-primary translate-y-[-4px] shadow-sm shadow-primary/20" 
                       : "text-muted-foreground group-hover:text-foreground"
                   )}
                 >

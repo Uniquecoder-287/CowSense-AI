@@ -1,9 +1,9 @@
 import { MobileLayout } from "@/components/layout/MobileLayout";
 import { mockCows, activityData } from "@/lib/mockData";
 import { useRoute, Link } from "wouter";
-import { ArrowLeft, Heart, Thermometer, Footprints, Battery, MapPin, Clock, History } from "lucide-react";
+import { ArrowLeft, Heart, Thermometer, Footprints, Battery, MapPin, Droplets, Utensils, Brain, Share2, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AreaChart, Area, ResponsiveContainer, Tooltip } from 'recharts';
+import { AreaChart, Area, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis } from 'recharts';
 
 export default function CowDetails() {
   const [match, params] = useRoute("/cow/:id");
@@ -25,113 +25,149 @@ export default function CowDetails() {
             <h1 className="text-2xl font-heading font-bold text-foreground">{cow.name}</h1>
             <p className="text-xs text-muted-foreground">ID: {cow.id} • {cow.breed}</p>
           </div>
-          <div className={cn(
-            "px-3 py-1 rounded-full text-xs font-bold uppercase",
-            cow.status === 'healthy' ? "bg-green-100 text-green-700" :
-            cow.status === 'warning' ? "bg-orange-100 text-orange-700" :
-            "bg-red-100 text-red-700"
-          )}>
-            {cow.status}
-          </div>
+          <button className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+             <Share2 className="w-5 h-5" />
+          </button>
         </div>
 
-        {/* Hero Card */}
-        <div className="glass-card p-6 rounded-3xl mb-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4 opacity-10">
-            <Heart className="w-32 h-32" />
-          </div>
-          
-          <div className="grid grid-cols-2 gap-6 relative z-10">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs uppercase font-bold tracking-wider mb-1">
-                <Heart className="w-3 h-3 text-red-400" /> Heart Rate
+        {/* Vitals History */}
+        <section className="mb-6">
+           <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">Vitals History</h3>
+           <div className="glass-card p-5 rounded-3xl mb-4">
+              <div className="grid grid-cols-3 gap-2 mb-4">
+                <div className="bg-white/50 p-3 rounded-2xl text-center">
+                    <Thermometer className="w-4 h-4 mx-auto mb-1 text-orange-500" />
+                    <span className="block text-lg font-bold">{cow.temperature}°</span>
+                    <span className="text-[10px] text-muted-foreground">Temp</span>
+                </div>
+                <div className="bg-white/50 p-3 rounded-2xl text-center">
+                    <Heart className="w-4 h-4 mx-auto mb-1 text-red-500" />
+                    <span className="block text-lg font-bold">{cow.heartRate}</span>
+                    <span className="text-[10px] text-muted-foreground">BPM</span>
+                </div>
+                <div className="bg-white/50 p-3 rounded-2xl text-center">
+                    <Footprints className="w-4 h-4 mx-auto mb-1 text-blue-500" />
+                    <span className="block text-lg font-bold">{(cow.steps/1000).toFixed(1)}k</span>
+                    <span className="text-[10px] text-muted-foreground">Steps</span>
+                </div>
               </div>
-              <p className="text-3xl font-heading font-bold text-foreground">{cow.heartRate} <span className="text-sm font-normal text-muted-foreground">bpm</span></p>
-            </div>
-            
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs uppercase font-bold tracking-wider mb-1">
-                <Thermometer className="w-3 h-3 text-orange-400" /> Temp
+              
+              {/* Activity Chart */}
+              <div className="h-24 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={activityData}>
+                    <defs>
+                      <linearGradient id="colorAct" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="hsl(198, 85%, 55%)" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="hsl(198, 85%, 55%)" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <Area type="monotone" dataKey="steps" stroke="hsl(198, 85%, 55%)" strokeWidth={2} fill="url(#colorAct)" />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
-              <p className="text-3xl font-heading font-bold text-foreground">{cow.temperature}° <span className="text-sm font-normal text-muted-foreground">C</span></p>
-            </div>
-
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs uppercase font-bold tracking-wider mb-1">
-                <Footprints className="w-3 h-3 text-blue-400" /> Activity
-              </div>
-              <p className="text-3xl font-heading font-bold text-foreground">{(cow.steps / 1000).toFixed(1)}k <span className="text-sm font-normal text-muted-foreground">steps</span></p>
-            </div>
-
-             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs uppercase font-bold tracking-wider mb-1">
-                <Battery className="w-3 h-3 text-green-400" /> Collar Bat
-              </div>
-              <p className="text-3xl font-heading font-bold text-foreground">{cow.batteryLevel}%</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Activity Chart */}
-        <div className="mb-6">
-           <h3 className="text-lg font-bold text-foreground mb-3 px-1">Daily Rhythm</h3>
-           <div className="bg-white p-4 rounded-3xl shadow-sm h-40 border border-border/40">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={activityData}>
-                  <defs>
-                    <linearGradient id="colorStepsCow" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="hsl(152, 60%, 70%)" stopOpacity={0.4}/>
-                      <stop offset="95%" stopColor="hsl(152, 60%, 70%)" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <Tooltip 
-                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="steps" 
-                    stroke="hsl(152, 60%, 50%)" 
-                    strokeWidth={3}
-                    fillOpacity={1} 
-                    fill="url(#colorStepsCow)" 
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
            </div>
+        </section>
+
+        {/* Rumination & Milk */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="glass p-4 rounded-3xl">
+                <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><Droplets className="w-4 h-4" /></div>
+                    <span className="text-xs font-bold uppercase text-muted-foreground">Rumination</span>
+                </div>
+                <p className="text-2xl font-bold mb-2">{cow.rumination} <span className="text-xs font-normal text-muted-foreground">min</span></p>
+                <div className="h-12">
+                   <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={activityData}>
+                      <Bar dataKey="rumination" fill="hsl(152, 60%, 70%)" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+            </div>
+
+            <div className="glass p-4 rounded-3xl">
+                <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><Utensils className="w-4 h-4" /></div>
+                    <span className="text-xs font-bold uppercase text-muted-foreground">Milk Output</span>
+                </div>
+                <p className="text-2xl font-bold mb-2">{cow.milkOutput} <span className="text-xs font-normal text-muted-foreground">L</span></p>
+                <div className="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full inline-block">
+                    +2.4L vs Avg
+                </div>
+            </div>
         </div>
 
-        {/* Info List */}
-        <div className="bg-white/60 backdrop-blur-md rounded-3xl p-1 shadow-sm border border-white/60">
-          <div className="p-4 border-b border-black/5 flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
-              <MapPin className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-semibold uppercase">Current Location</p>
-              <p className="text-foreground font-medium">{cow.location}</p>
-            </div>
-          </div>
-          
-          <div className="p-4 border-b border-black/5 flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-500">
-              <Clock className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-semibold uppercase">Last Milking</p>
-              <p className="text-foreground font-medium">{cow.lastMilking}</p>
-            </div>
-          </div>
+        {/* Behavior Insights */}
+        <section className="mb-6">
+             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">Behavior Insights</h3>
+             <div className="glass p-5 rounded-3xl space-y-4">
+                <div>
+                    <div className="flex justify-between text-xs mb-1">
+                        <span>Resting</span>
+                        <span className="font-bold">{cow.behavior.resting}h</span>
+                    </div>
+                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-purple-400 rounded-full" style={{ width: `${(cow.behavior.resting/24)*100}%` }}></div>
+                    </div>
+                </div>
+                <div>
+                    <div className="flex justify-between text-xs mb-1">
+                        <span>Walking</span>
+                        <span className="font-bold">{cow.behavior.walking}h</span>
+                    </div>
+                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-blue-400 rounded-full" style={{ width: `${(cow.behavior.walking/24)*100}%` }}></div>
+                    </div>
+                </div>
+                <div>
+                    <div className="flex justify-between text-xs mb-1">
+                        <span>Chewing</span>
+                        <span className="font-bold">{cow.behavior.chewing}h</span>
+                    </div>
+                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-green-400 rounded-full" style={{ width: `${(cow.behavior.chewing/24)*100}%` }}></div>
+                    </div>
+                </div>
+             </div>
+        </section>
 
-          <div className="p-4 flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-500">
-              <History className="w-5 h-5" />
+        {/* AI Disease Patterns */}
+        <section className="mb-6">
+             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">AI Disease Patterns</h3>
+             <div className="bg-white/60 p-5 rounded-3xl border border-white space-y-3">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <Brain className="w-5 h-5 text-primary" />
+                        <span className="font-medium">Stress Score</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="flex gap-0.5">
+                            {[1,2,3,4,5,6,7,8,9,10].map(n => (
+                                <div key={n} className={cn("w-1 h-3 rounded-full", n <= cow.stressScore ? "bg-red-400" : "bg-gray-200")} />
+                            ))}
+                        </div>
+                        <span className="text-xs font-bold text-muted-foreground">{cow.stressScore}/10</span>
+                    </div>
+                </div>
+             </div>
+        </section>
+        
+        {/* GPS Map Placeholder */}
+        <section className="mb-6">
+            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">Live Location</h3>
+            <div className="h-40 bg-gray-200 rounded-3xl relative overflow-hidden flex items-center justify-center">
+                 <div className="absolute inset-0 opacity-50 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Google_Maps_Logo_2020.svg/2275px-Google_Maps_Logo_2020.svg.png')] bg-cover bg-center grayscale" />
+                 <div className="z-10 bg-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-red-500" />
+                    <span className="font-bold text-xs">{cow.location}</span>
+                 </div>
             </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-semibold uppercase">Age</p>
-              <p className="text-foreground font-medium">{cow.age} years old</p>
-            </div>
-          </div>
-        </div>
+        </section>
+
+        <button className="w-full bg-foreground text-background py-4 rounded-3xl font-bold flex items-center justify-center gap-2 shadow-lg">
+            <Download className="w-5 h-5" /> Download Health Report
+        </button>
 
       </div>
     </MobileLayout>

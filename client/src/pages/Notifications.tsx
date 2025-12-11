@@ -5,13 +5,23 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useApp } from "@/lib/appContext";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Notifications() {
   const { t } = useApp();
+  const { toast } = useToast();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const toggleExpand = (id: string) => {
     setExpandedId(expandedId === id ? null : id);
+  };
+
+  const handleAction = (action: string) => {
+    toast({
+      title: "Action Taken",
+      description: `Executed: ${action}`,
+      variant: "default",
+    });
   };
 
   return (
@@ -82,10 +92,16 @@ export default function Notifications() {
                       {notif.action && (
                         <div>
                           <h4 className="font-semibold text-foreground mb-2 text-xs uppercase tracking-wide opacity-70">{t.notifications.recommendedActions}</h4>
-                          <ul className="space-y-1">
+                          <ul className="space-y-2">
                             {notif.action.map((act, i) => (
-                              <li key={i} className="flex items-center gap-2 text-muted-foreground">
-                                <div className="w-1.5 h-1.5 rounded-full bg-primary" /> {act}
+                              <li 
+                                key={i} 
+                                className="flex items-center gap-2 text-muted-foreground p-2 rounded-lg hover:bg-white/50 dark:hover:bg-white/10 cursor-pointer transition-colors border border-transparent hover:border-black/5 active:scale-[0.98]"
+                                onClick={() => handleAction(act)}
+                              >
+                                <div className="w-1.5 h-1.5 rounded-full bg-primary" /> 
+                                <span className="flex-1">{act}</span>
+                                <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">Do It</span>
                               </li>
                             ))}
                           </ul>

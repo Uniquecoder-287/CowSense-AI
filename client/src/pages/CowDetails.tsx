@@ -5,13 +5,45 @@ import { ArrowLeft, Heart, Thermometer, Footprints, Battery, MapPin, Droplets, U
 import { cn } from "@/lib/utils";
 import { AreaChart, Area, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { useApp } from "@/lib/appContext";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CowDetails() {
   const [match, params] = useRoute("/cow/:id");
   const cow = mockCows.find(c => c.id === params?.id);
   const { t } = useApp();
+  const { toast } = useToast();
 
   if (!cow) return <div className="p-10 text-center text-foreground">Cow not found</div>;
+
+  const handleShare = () => {
+    // Simulate share
+    if (navigator.share) {
+      navigator.share({
+        title: `Cow Profile: ${cow.name}`,
+        text: `Check out the health stats for ${cow.name} (ID: ${cow.id}). Health Score: ${cow.healthScore}.`,
+        url: window.location.href,
+      }).catch(console.error);
+    } else {
+      toast({
+        title: "Link Copied",
+        description: `Profile link for ${cow.name} copied to clipboard.`,
+      });
+    }
+  };
+
+  const handleDownload = () => {
+    toast({
+      title: "Downloading...",
+      description: `Health report for ${cow.name} is being generated.`,
+    });
+    setTimeout(() => {
+      toast({
+        title: "Download Complete",
+        description: `${cow.name}_Health_Report.pdf saved to device.`,
+        variant: "default",
+      });
+    }, 1500);
+  };
 
   return (
     <MobileLayout>
@@ -27,7 +59,10 @@ export default function CowDetails() {
             <h1 className="text-2xl font-heading font-bold text-foreground">{cow.name}</h1>
             <p className="text-xs text-muted-foreground">ID: {cow.id} • {cow.breed}</p>
           </div>
-          <button className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+          <button 
+            onClick={handleShare}
+            className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center active:scale-95 transition-transform"
+          >
              <Share2 className="w-5 h-5" />
           </button>
         </div>
@@ -191,8 +226,8 @@ export default function CowDetails() {
         {/* GPS Map Placeholder */}
         <section className="mb-6">
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">{t.dashboard.liveLocation}</h3>
-            <div className="h-40 bg-gray-200 dark:bg-gray-800 rounded-3xl relative overflow-hidden flex items-center justify-center">
-                 <div className="absolute inset-0 opacity-50 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Google_Maps_Logo_2020.svg/2275px-Google_Maps_Logo_2020.svg.png')] bg-cover bg-center grayscale" />
+            <div className="h-40 bg-gray-200 dark:bg-gray-800 rounded-3xl relative overflow-hidden flex items-center justify-center group cursor-pointer" onClick={() => toast({ title: "Opening Map", description: "Loading high-resolution pasture map..." })}>
+                 <div className="absolute inset-0 opacity-50 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Google_Maps_Logo_2020.svg/2275px-Google_Maps_Logo_2020.svg.png')] bg-cover bg-center grayscale group-hover:scale-105 transition-transform duration-700" />
                  <div className="z-10 bg-white dark:bg-gray-900 px-4 py-2 rounded-xl shadow-lg flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-red-500" />
                     <span className="font-bold text-xs text-foreground">{cow.location}</span>
@@ -200,7 +235,10 @@ export default function CowDetails() {
             </div>
         </section>
 
-        <button className="w-full bg-foreground text-background py-4 rounded-3xl font-bold flex items-center justify-center gap-2 shadow-lg hover:opacity-90 transition-opacity">
+        <button 
+          onClick={handleDownload}
+          className="w-full bg-foreground text-background py-4 rounded-3xl font-bold flex items-center justify-center gap-2 shadow-lg hover:opacity-90 transition-opacity active:scale-[0.99]"
+        >
             <Download className="w-5 h-5" /> {t.details.downloadReport}
         </button>
 

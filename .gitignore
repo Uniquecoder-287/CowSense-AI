@@ -1,6 +1,9 @@
-node_modules
-dist
+node_modules/
+dist/
+android/
+!android/app/  # Keep the android app config, but ignore build artifacts
+android/.gradle
+android/build
+android/app/build
+.env
 .DS_Store
-server/public
-vite.config.ts.*
-*.tar.gz

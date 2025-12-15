@@ -12,8 +12,6 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 
-  /* Color Palette */
-  
   /* Light Mode (Default) */
   --color-background: 0 0% 100%; /* #FFFFFF */
   --color-foreground: 215 25% 10%; /* Dark Grey/Black for text */
@@ -24,7 +22,7 @@
   --color-popover: 0 0% 100%;
   --color-popover-foreground: 215 25% 10%;
 
-  --color-primary: 198 85% 55%; /* Sky Blue - kept as brand color */
+  --color-primary: 198 85% 55%; /* Brand sky blue */
   --color-primary-foreground: 0 0% 100%;
 
   --color-secondary: 152 60% 70%; /* Mint */
@@ -42,7 +40,7 @@
   --color-border: 220 13% 91%;
   --color-input: 220 13% 91%;
   --color-ring: 198 85% 55%;
-  
+
   /* Chart Colors */
   --color-chart-1: 198 85% 55%;
   --color-chart-2: 152 60% 60%;
@@ -54,63 +52,72 @@
   --shadow-neumorphic: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
 }
 
+/* Dark Mode Overrides - Pitch Dark / AMOLED
+   Put variables on `.dark` so it works whether `.dark` is on <html>, <body>, or a wrapper.
+*/
+.dark {
+  --color-background: 0 0% 0%;     /* #000000 */
+  --color-foreground: 0 0% 94%;    /* #F0F0F0 */
+
+  --color-card: 0 0% 12%;          /* #1F1F1F */
+  --color-card-foreground: 0 0% 94%;
+
+  --color-popover: 0 0% 12%;
+  --color-popover-foreground: 0 0% 94%;
+
+  --color-primary: 198 85% 60%;    /* slightly brighter */
+  --color-primary-foreground: 0 0% 100%;
+
+  --color-muted: 0 0% 18%;
+  --color-muted-foreground: 0 0% 82%; /* brighter muted text */
+
+  --color-accent: 250 30% 20%;
+  --color-accent-foreground: 250 80% 92%;
+
+  --color-border: 0 0% 28%;
+  --color-input: 0 0% 28%;
+}
+
 @layer base {
   * {
     @apply border-border;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground;
+  }
+
+  /* Helps SVGs that use currentColor follow text color.
+     Note: for many icon libs you still need fill="currentColor" or className="fill-current/stroke-current".
+  */
+  svg {
+    color: currentColor;
+  }
+
   body {
     @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
-    /* Light Mode Background - Clean White/Light Grey */
     background-color: hsl(var(--color-background));
   }
 
-  /* Dark Mode Overrides - Pitch Dark / AMOLED */
+  /* Optional: ensure no background image leaks into dark mode */
   .dark body {
-    --color-background: 0 0% 0%; /* #000000 Pitch Black */
-    --color-foreground: 0 0% 94%; /* #F0F0F0 Off-white text */
-    
-    --color-card: 0 0% 12%; /* #1F1F1F Dark Grey Cards */
-    --color-card-foreground: 0 0% 94%;
-
-    --color-popover: 0 0% 12%;
-    --color-popover-foreground: 0 0% 94%;
-    
-    --color-primary: 198 85% 55%; /* Keep brand color but maybe slightly desaturated if needed, standard is usually fine */
-    --color-primary-foreground: 0 0% 100%;
-
-    --color-muted: 0 0% 18%;
-    --color-muted-foreground: 0 0% 70%; /* Lighter grey for muted text in dark mode */
-
-    --color-accent: 250 30% 20%; /* Darker accent background */
-    --color-accent-foreground: 250 80% 90%;
-
-    --color-border: 0 0% 20%; /* Dark border */
-    --color-input: 0 0% 20%;
-    
     background-color: hsl(var(--color-background));
-    background-image: none; /* Remove gradients for pitch black feel */
+    background-image: none;
   }
 }
 
 @layer utilities {
-  /* 
-     Glass/Card Utilities 
-     - Light Mode: Subtle transparency, blur, shadow.
-     - Dark Mode: Dark Grey background (#1F1F1F), subtle border, no heavy drop shadow, glow effect.
-  */
-  
+  /* Glass/Card Utilities */
   .glass {
     @apply bg-white/60 backdrop-blur-md border border-white/50 shadow-sm transition-colors duration-300;
   }
-  
+
   .dark .glass {
-    /* Dark Mode: Solid-ish Dark Grey to separate from black bg */
-    background-color: hsl(0 0% 12% / 0.8); /* #1F1F1F with slight transparency */
+    background-color: hsl(0 0% 12% / 0.8);
     @apply backdrop-blur-xl border border-white/10 shadow-none;
-    /* Subtle glow/border effect instead of shadow */
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
-  
+
   .glass-card {
     @apply bg-white/80 backdrop-blur-xl border border-white/60 shadow-md transition-colors duration-300;
   }
@@ -118,21 +125,20 @@
   .dark .glass-card {
     background-color: hsl(0 0% 12% / 0.9);
     @apply backdrop-blur-2xl border border-white/10 shadow-none;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
   }
 
-  /* Popups need to stand out more */
   .glass-popup {
     @apply bg-white/95 backdrop-blur-2xl border border-white/50 shadow-2xl transition-colors duration-300;
   }
-  
+
   .dark .glass-popup {
-    background-color: hsl(0 0% 14% / 0.95); /* Slightly lighter than card for elevation */
+    background-color: hsl(0 0% 14% / 0.95);
     @apply backdrop-blur-2xl border border-white/10 shadow-2xl;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 10px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 10px 40px rgba(0, 0, 0, 0.5);
   }
 
   .text-shadow {
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 }

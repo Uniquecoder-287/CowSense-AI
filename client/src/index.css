@@ -68,6 +68,16 @@
                       radial-gradient(at 100% 100%, hsl(250, 80%, 97%) 0px, transparent 50%);
     background-attachment: fixed;
   }
+
+  .dark body {
+    /* Pitch Dark Mode override */
+    --color-background: 0 0% 0%; /* Pure Black */
+    --color-foreground: 0 0% 95%;
+    --color-muted: 0 0% 10%;
+    
+    background-image: radial-gradient(at 0% 0%, hsl(198, 85%, 10%) 0px, transparent 40%),
+                      radial-gradient(at 100% 100%, hsl(250, 80%, 15%) 0px, transparent 40%);
+  }
 }
 
 @layer utilities {
@@ -75,8 +85,21 @@
     @apply bg-white/40 backdrop-blur-md border border-white/50 shadow-sm;
   }
   
+  .dark .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-sm;
+  }
+  
   .glass-card {
     @apply bg-white/60 backdrop-blur-xl border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  }
+
+  .dark .glass-card {
+    @apply bg-zinc-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.5)];
+  }
+
+  /* Stronger glass for popups/toasts to separate from background */
+  .glass-popup {
+    @apply bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl border border-white/50 dark:border-white/20 shadow-2xl;
   }
 
   .neumorphic {

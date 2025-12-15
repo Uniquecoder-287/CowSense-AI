@@ -12,31 +12,28 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 
-  /* Color Palette - H S% L% */
-  /* Sky Blue: 198 93% 60% */
-  /* Mint: 152 76% 80% */
-  /* Purple: 250 80% 90% */
-  /* Base White/Grey: 210 20% 98% */
+  /* Color Palette */
+  
+  /* Light Mode (Default) */
+  --color-background: 0 0% 100%; /* #FFFFFF */
+  --color-foreground: 215 25% 10%; /* Dark Grey/Black for text */
 
-  --color-background: 210 30% 98%;
-  --color-foreground: 215 25% 27%;
-
-  --color-card: 0 0% 100%;
-  --color-card-foreground: 215 25% 27%;
+  --color-card: 210 20% 98%; /* Slightly darker white/grey for cards */
+  --color-card-foreground: 215 25% 10%;
 
   --color-popover: 0 0% 100%;
-  --color-popover-foreground: 215 25% 27%;
+  --color-popover-foreground: 215 25% 10%;
 
-  --color-primary: 198 85% 55%; /* Sky Blue */
+  --color-primary: 198 85% 55%; /* Sky Blue - kept as brand color */
   --color-primary-foreground: 0 0% 100%;
 
-  --color-secondary: 152 60% 70%; /* Mint Green */
+  --color-secondary: 152 60% 70%; /* Mint */
   --color-secondary-foreground: 155 40% 20%;
 
   --color-muted: 210 20% 96%;
-  --color-muted-foreground: 215 16% 47%;
+  --color-muted-foreground: 215 16% 40%;
 
-  --color-accent: 250 80% 92%; /* Soft Purple */
+  --color-accent: 250 80% 96%;
   --color-accent-foreground: 250 40% 30%;
 
   --color-destructive: 0 84% 60%;
@@ -45,16 +42,16 @@
   --color-border: 220 13% 91%;
   --color-input: 220 13% 91%;
   --color-ring: 198 85% 55%;
-
+  
+  /* Chart Colors */
   --color-chart-1: 198 85% 55%;
   --color-chart-2: 152 60% 60%;
   --color-chart-3: 250 70% 70%;
   --color-chart-4: 43 90% 65%;
   --color-chart-5: 27 80% 60%;
 
+  /* Shadows */
   --shadow-neumorphic: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
-  --shadow-neumorphic-inset: inset 6px 6px 12px #d1d9e6, inset -6px -6px 12px #ffffff;
-  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 }
 
 @layer base {
@@ -62,54 +59,80 @@
     @apply border-border;
   }
   body {
-    @apply font-sans antialiased bg-background text-foreground selection:bg-primary/20;
-    background-image: radial-gradient(at 0% 0%, hsl(198, 85%, 96%) 0px, transparent 50%),
-                      radial-gradient(at 100% 0%, hsl(152, 60%, 96%) 0px, transparent 50%),
-                      radial-gradient(at 100% 100%, hsl(250, 80%, 97%) 0px, transparent 50%);
-    background-attachment: fixed;
+    @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
+    /* Light Mode Background - Clean White/Light Grey */
+    background-color: hsl(var(--color-background));
   }
 
+  /* Dark Mode Overrides - Pitch Dark / AMOLED */
   .dark body {
-    /* Pitch Dark Mode override */
-    --color-background: 0 0% 0%; /* Pure Black */
-    --color-foreground: 0 0% 95%;
-    --color-muted: 0 0% 10%;
+    --color-background: 0 0% 0%; /* #000000 Pitch Black */
+    --color-foreground: 0 0% 94%; /* #F0F0F0 Off-white text */
     
-    background-image: radial-gradient(at 0% 0%, hsl(198, 85%, 10%) 0px, transparent 40%),
-                      radial-gradient(at 100% 100%, hsl(250, 80%, 15%) 0px, transparent 40%);
+    --color-card: 0 0% 12%; /* #1F1F1F Dark Grey Cards */
+    --color-card-foreground: 0 0% 94%;
+
+    --color-popover: 0 0% 12%;
+    --color-popover-foreground: 0 0% 94%;
+    
+    --color-primary: 198 85% 55%; /* Keep brand color but maybe slightly desaturated if needed, standard is usually fine */
+    --color-primary-foreground: 0 0% 100%;
+
+    --color-muted: 0 0% 18%;
+    --color-muted-foreground: 0 0% 70%; /* Lighter grey for muted text in dark mode */
+
+    --color-accent: 250 30% 20%; /* Darker accent background */
+    --color-accent-foreground: 250 80% 90%;
+
+    --color-border: 0 0% 20%; /* Dark border */
+    --color-input: 0 0% 20%;
+    
+    background-color: hsl(var(--color-background));
+    background-image: none; /* Remove gradients for pitch black feel */
   }
 }
 
 @layer utilities {
+  /* 
+     Glass/Card Utilities 
+     - Light Mode: Subtle transparency, blur, shadow.
+     - Dark Mode: Dark Grey background (#1F1F1F), subtle border, no heavy drop shadow, glow effect.
+  */
+  
   .glass {
-    @apply bg-white/40 backdrop-blur-md border border-white/50 shadow-sm;
+    @apply bg-white/60 backdrop-blur-md border border-white/50 shadow-sm transition-colors duration-300;
   }
   
   .dark .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-sm;
+    /* Dark Mode: Solid-ish Dark Grey to separate from black bg */
+    background-color: hsl(0 0% 12% / 0.8); /* #1F1F1F with slight transparency */
+    @apply backdrop-blur-xl border border-white/10 shadow-none;
+    /* Subtle glow/border effect instead of shadow */
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
   }
   
   .glass-card {
-    @apply bg-white/60 backdrop-blur-xl border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+    @apply bg-white/80 backdrop-blur-xl border border-white/60 shadow-md transition-colors duration-300;
   }
 
   .dark .glass-card {
-    @apply bg-zinc-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.5)];
+    background-color: hsl(0 0% 12% / 0.9);
+    @apply backdrop-blur-2xl border border-white/10 shadow-none;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
   }
 
-  /* Stronger glass for popups/toasts to separate from background */
+  /* Popups need to stand out more */
   .glass-popup {
-    @apply bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl border border-white/50 dark:border-white/20 shadow-2xl;
+    @apply bg-white/95 backdrop-blur-2xl border border-white/50 shadow-2xl transition-colors duration-300;
+  }
+  
+  .dark .glass-popup {
+    background-color: hsl(0 0% 14% / 0.95); /* Slightly lighter than card for elevation */
+    @apply backdrop-blur-2xl border border-white/10 shadow-2xl;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 10px 40px rgba(0,0,0,0.5);
   }
 
-  .neumorphic {
-    box-shadow: var(--shadow-neumorphic);
-    border-radius: var(--radius-xl);
-    background: linear-gradient(145deg, #ffffff, #f0f4f8);
-  }
-
-  .neumorphic-pressed {
-    box-shadow: var(--shadow-neumorphic-inset);
-    background: #f0f4f8;
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   }
 }

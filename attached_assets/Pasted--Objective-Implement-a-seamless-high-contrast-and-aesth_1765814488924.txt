@@ -1,0 +1,48 @@
+🎯 Objective
+Implement a seamless, high-contrast, and aesthetically pleasing Dark Mode and Light Mode throughout the entire CowSense AI application, ensuring readability and maintaining the existing brand aesthetic in both themes.
+
+💡 Visual Requirements
+1. Light Mode (Reference: Uploaded Images)
+The Light Mode must replicate the current design seen in the screenshots, serving as the default theme.
+
+Background: Predominantly White or Very Light Grey (e.g., #FFFFFF or a near-white shade).
+
+Card/Container Backgrounds: Use a slightly darker shade of white or light grey than the main background to provide subtle depth and visual separation for elements like cow lists, notification cards, and vital boxes.
+
+Text: High-contrast Dark Grey or Black for maximum readability.
+
+Key Color Usage:
+
+Health Indicators (e.g., the circular health score): Use the existing Green (Healthy), Orange (Needs Attention), and Red (Urgent) color palette. These colors must remain vibrant and pop against the light background.
+
+Icons and Accent Colors: Maintain the current subtle blues/purples/teals for system elements (like the settings gear, alert bell, etc.).
+
+2. Dark Mode (Goal: Pitch Dark/AMOLED Friendly)
+The Dark Mode must use a deep, pitch-dark background to minimize eye strain and save battery on OLED/AMOLED screens.
+
+Background: Pitch Black or an extremely dark near-black (e.g., #000000 or a very dark #121212).
+
+Card/Container Backgrounds: Use a dark grey that is visibly lighter than the background but still very dark (e.g., #1F1F1F or similar). This is crucial for separating UI elements from the black background.
+
+Text: White or Very Light Grey text (e.g., #F0F0F0) for optimal contrast and readability. Avoid pure white text on pitch black to prevent halation/bleeding effects; a slightly off-white is preferred.
+
+Key Color Usage & Accessibility:
+
+Health Indicators (Green, Orange, Red): Colors must be retained, but ensure they are vibrant enough to pass WCAG AA contrast standards against the dark background. They should remain instantly recognizable.
+
+Accents: Desaturate existing accent colors slightly or add a luminous quality to ensure they don't appear overly bright or jarring.
+
+✅ User Experience (UX) and Functionality
+User Selection: Implement a clear toggle or setting within the Settings Menu (as seen in IMG_20251212_113117.jpg) allowing the user to select:
+
+Light
+
+Dark
+
+System Default (Automatically match the operating system's theme setting).
+
+Transitions: Ensure the transition between Light and Dark Mode is smooth and instantaneous, with no visual flickering.
+
+Images/Logos: Any embedded images or the 'CowSense AI' logo must remain clearly visible in both modes. If necessary, provide separate versions of the logo or modify image overlays for the Dark Mode.
+
+Shadows: In Dark Mode, replace drop shadows with subtle, lighter borders or glow effects to provide depth.

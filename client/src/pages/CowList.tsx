@@ -131,7 +131,7 @@ export default function CowList() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 mt-2">
+      <div className="grid grid-cols-1 gap-4 mt-2 pb-20">
         {filteredCows.map((cow) => (
           <Link key={cow.id} href={`/cow/${cow.id}`}>
             <a className="block group">
@@ -195,6 +195,14 @@ export default function CowList() {
           </Link>
         ))}
       </div>
+
+      {/* Floating Action Button for easy access */}
+      <button 
+        onClick={() => setIsAddOpen(true)}
+        className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-primary text-white shadow-2xl shadow-primary/40 flex items-center justify-center z-40 hover:scale-110 active:scale-95 transition-all"
+      >
+        <Plus className="w-8 h-8" />
+      </button>
 
       {/* Add Cow Dialog with Glassmorphism */}
       <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>

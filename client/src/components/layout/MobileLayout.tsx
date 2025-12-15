@@ -1,8 +1,16 @@
 import { Link, useLocation } from "wouter";
-import { LayoutDashboard, List, Bell, Settings, Menu } from "lucide-react";
+import { LayoutDashboard, List, Bell, Settings, Menu, LogOut, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import bgImage from "@assets/generated_images/soft_gradient_background_for_mobile_app.png";
 import { useApp } from "@/lib/appContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface MobileLayoutProps {
   children: React.ReactNode;
@@ -10,7 +18,7 @@ interface MobileLayoutProps {
 
 export function MobileLayout({ children }: MobileLayoutProps) {
   const [location] = useLocation();
-  const { t } = useApp();
+  const { t, logout } = useApp();
 
   const navItems = [
     { icon: LayoutDashboard, label: t.nav.home, path: "/" },
@@ -41,9 +49,34 @@ export function MobileLayout({ children }: MobileLayoutProps) {
              CowSense AI
            </h1>
         </div>
-        <button className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:bg-black/10 transition-colors">
-          <Menu className="w-6 h-6 text-foreground/80" />
-        </button>
+        
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:bg-black/10 transition-colors">
+              <Menu className="w-6 h-6 text-foreground/80" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56 glass-popup border-none text-foreground mt-2 rounded-2xl">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-foreground/10" />
+            <DropdownMenuItem className="cursor-pointer focus:bg-foreground/5 rounded-xl">
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer focus:bg-foreground/5 rounded-xl">
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-foreground/10" />
+            <DropdownMenuItem 
+              onClick={logout}
+              className="text-red-500 focus:text-red-500 focus:bg-red-50 dark:focus:bg-red-900/10 cursor-pointer rounded-xl"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </header>
 
       {/* Main Content */}

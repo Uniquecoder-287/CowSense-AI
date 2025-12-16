@@ -8,4 +8,4 @@ android/app/build
 .env
 .DS_Store
 postcss.config.js
-.local
+.local/state/replit/agent

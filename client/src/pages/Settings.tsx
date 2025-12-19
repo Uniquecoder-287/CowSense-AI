@@ -192,9 +192,9 @@ export default function Settings() {
               { id: 'activity', label: t.settings.lowActivity, desc: 'Possible illness' },
               { id: 'sos', label: t.settings.criticalSos, desc: 'Urgent attention needed' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between">
+              <div key={i} className=" flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-foreground">{item.label}</p>
+                  <p className="font-medium text-foreground ">{item.label}</p>
                   <p className="text-xs text-muted-foreground">{item.desc}</p>
                 </div>
                 <Switch 

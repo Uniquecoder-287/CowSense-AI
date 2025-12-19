@@ -86,7 +86,7 @@ export default function Login() {
               <button 
                 type="submit"
                 disabled={phone.length < 10 || loading}
-                className="w-full bg-primary text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="w-full get-otp bg-primary text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
               >
                 {loading ? "Sending OTP..." : <>Get OTP <ArrowRight className="w-5 h-5" /></>}
               </button>
@@ -120,7 +120,7 @@ export default function Login() {
               <button 
                 onClick={handleVerify}
                 disabled={otp.some(d => !d) || loading}
-                className="w-full bg-primary text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="w-full verify bg-primary text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
               >
                  {loading ? "Verifying..." : <>Verify & Login <Lock className="w-4 h-4" /></>}
               </button>
